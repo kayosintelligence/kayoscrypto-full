@@ -1,0 +1,152 @@
+version: '3.8'
+
+services:
+  # Database Cluster
+  postgres-primary:
+    image: postgres:15
+    container_name: kayos_postgres_primary
+    environment:
+      POSTGRES_DB: kayos_licensing
+      POSTGRES_USER: kayos_enterprise
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_INITDB_ARGS: "--encoding=UTF8 --lc-collate=C --lc-ctype=C"
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./infrastructure/database/init:/docker-entrypoint-initdb.d
+    networks:
+      - kayos_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U kayos_enterprise -d kayos_licensing"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  postgres-replica:
+    image: postgres:15
+    container_name: kayos_postgres_replica
+    environment:
+      POSTGRES_DB: kayos_licensing
+      POSTGRES_USER: kayos_enterprise
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    depends_on:
+      - postgres-primary
+    networks:
+      - kayos_network
+    profiles: ["scale"]
+
+  # Redis Cluster
+  redis-primary:
+    image: redis:7-alpine
+    container_name: kayos_redis_primary
+    command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD}
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - kayos_network
+    healthcheck:
+      test: ["CMD", "redis-cli", "--raw", "incr", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+
+  redis-replica:
+    image: redis:7-alpine
+    container_name: kayos_redis_replica
+    command: redis-server --appendonly yes --replicaof redis-primary 6379 --requirepass ${REDIS_PASSWORD} --masterauth ${REDIS_PASSWORD}
+    depends_on:
+      - redis-primary
+    networks:
+      - kayos_network
+    profiles: ["scale"]
+
+  # Main API Service
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    container_name: kayos_api
+    environment:
+      - ENVIRONMENT=production
+      - DATABASE_URL=postgresql://kayos_enterprise:${DB_PASSWORD}@postgres-primary:5432/kayos_licensing
+      - REDIS_URL=redis://:${REDIS_PASSWORD}@redis-primary:6379/0
+      - JWT_SECRET_KEY=${JWT_SECRET}
+      - ENCRYPTION_MASTER_KEY=${MASTER_KEY}
+    ports:
+      - "8000:8000"
+    depends_on:
+      postgres-primary:
+        condition: service_healthy
+      redis-primary:
+        condition: service_healthy
+    networks:
+      - kayos_network
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+          cpus: '1.0'
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Worker for async tasks
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile.worker
+    container_name: kayos_worker
+    environment:
+      - DATABASE_URL=postgresql://kayos_enterprise:${DB_PASSWORD}@postgres-primary:5432/kayos_licensing
+      - REDIS_URL=redis://:${REDIS_PASSWORD}@redis-primary:6379/0
+    depends_on:
+      - postgres-primary
+      - redis-primary
+    networks:
+      - kayos_network
+    profiles: ["scale"]
+
+  # Monitoring Stack
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: kayos_prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./deployments/monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    networks:
+      - kayos_network
+    profiles: ["monitoring"]
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: kayos_grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD}
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./deployments/monitoring/dashboards:/etc/grafana/provisioning/dashboards
+    networks:
+      - kayos_network
+    profiles: ["monitoring"]
+
+volumes:
+  postgres_data:
+  redis_data:
+  prometheus_data:
+  grafana_data:
+
+networks:
+  kayos_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16

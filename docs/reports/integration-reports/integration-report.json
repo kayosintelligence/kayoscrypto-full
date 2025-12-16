@@ -1,0 +1,32 @@
+{
+  "integration_report": {
+    "generated_at": "2025-10-09T13:53:26.287247",
+    "environment": {
+      "working_directory": "/home/kbe/KAYOS_SYSTEMS/KayosCrypto",
+      "kayoscrypto_detected": true,
+      "kayosql_accessible": true,
+      "integration_files_present": [
+        "kayosql_native_integration_test.py",
+        "/home/kbe/KAYOS_SYSTEMS/KayosQL/test_kayoscrypto_integration.py",
+        "/home/kbe/KAYOS_SYSTEMS/KayosQL/kayosql_enterprise_unified.py",
+        "/home/kbe/KAYOS_SYSTEMS/KayosQL/kayoscrypto_bridge.py"
+      ]
+    },
+    "connectivity_tests": [
+      {
+        "component": "KayosCrypto Engine",
+        "status": "CONNECTED"
+      },
+      {
+        "component": "KayosQL Enterprise",
+        "status": "CONNECTED"
+      }
+    ],
+    "integration_score": 100.0,
+    "recommendations": [
+      "Execute do diret\u00f3rio KayosCrypto para integra\u00e7\u00e3o completa",
+      "Verifique se todos os arquivos de integra\u00e7\u00e3o est\u00e3o presentes",
+      "Teste conectividade individual dos componentes"
+    ]
+  }
+}

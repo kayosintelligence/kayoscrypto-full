@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard - KayosCrypto 3D Enterprise</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; color: #333; margin: 0; padding: 20px; }
+        .container { max-width: 1400px; margin: 0 auto; }
+        h1 { color: #667eea; text-align: center; margin-bottom: 20px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 20px; }
+        .card { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .card h2 { color: #764ba2; border-bottom: 2px solid #eee; padding-bottom: 10px; margin-bottom: 15px; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { text-align: left; padding: 12px; border-bottom: 1px solid #ddd; }
+        th { background-color: #f8f9fa; }
+        .nav-link { display: inline-block; margin: 20px auto; padding: 10px 20px; background: #667eea; color: white; text-decoration: none; border-radius: 5px; text-align: center; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 Dashboard de Segurança</h1>
+        <div class="grid">
+            <div class="card">
+                <h2>Visão Geral do Sistema</h2>
+                {% if data.dashboard %}
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Cubo</th>
+                                <th>Chaves Ativas</th>
+                                <th>Chaves Expiradas</th>
+                                <th>Operações (24h)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for item in data.dashboard %}
+                            <tr>
+                                <td>{{ item.cube_name }}</td>
+                                <td>{{ item.active_keys }}</td>
+                                <td>{{ item.expired_keys }}</td>
+                                <td>{{ item.operations_24h }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <p>Nenhuma informação do dashboard disponível.</p>
+                {% endif %}
+            </div>
+            <div class="card">
+                <h2>Relatório de Compliance</h2>
+                {% if data.compliance_report %}
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Cubo</th>
+                                <th>Algoritmo</th>
+                                <th>Status da Chave</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for item in data.compliance_report %}
+                            <tr>
+                                <td>{{ item.cube_name }}</td>
+                                <td>{{ item.algorithm_combination }}</td>
+                                <td>{{ item.key_status }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <p>Nenhum relatório de compliance disponível.</p>
+                {% endif %}
+            </div>
+        </div>
+        <a href="/" class="nav-link">Voltar para Home</a>
+    </div>
+</body>
+</html>

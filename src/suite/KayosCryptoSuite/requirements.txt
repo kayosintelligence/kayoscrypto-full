@@ -1,0 +1,9 @@
+Flask
+cryptography
+psycopg2-binary
+requests
+cryptography
+SQLAlchemy
+psycopg2-binary
+requests
+Flask-CORS

@@ -1,0 +1,115 @@
+{
+  "timestamp": "2025-10-09T14:11:41.006014",
+  "validation_id": "KAYOSQL_VALIDATION_REAL_20251009_141141",
+  "status": "PERFEITO",
+  "tests_run": 4,
+  "tests_passed": 4,
+  "tests_failed": 0,
+  "validation_phases": {
+    "DISPONIBILIDADE_KAYOSQL_REAL": {
+      "status": "PASSOU",
+      "timestamp": "2025-10-09T14:11:41.006952",
+      "details": {
+        "arquivos_verificados": 3,
+        "verificacoes_conteudo": {
+          "kayosql_enterprise_final.py": {
+            "tem_classes": true,
+            "tem_funcoes": true,
+            "tem_referencias_kayos": true,
+            "tamanho_bytes": 46661
+          },
+          "kayosql_launcher_native.py": {
+            "tem_classes": false,
+            "tem_funcoes": true,
+            "tem_referencias_kayos": true,
+            "tamanho_bytes": 13963
+          },
+          "test_kayoscrypto_integration.py": {
+            "tem_classes": true,
+            "tem_funcoes": true,
+            "tem_referencias_kayos": true,
+            "tamanho_bytes": 19971
+          }
+        }
+      }
+    },
+    "INTEGRIDADE_DADOS_REAL": {
+      "status": "PASSOU",
+      "timestamp": "2025-10-09T14:11:41.007227",
+      "details": {
+        "relatorios_analisados": 1,
+        "total_registros_real": 28,
+        "total_tabelas_real": 8,
+        "faces_utilizadas_real": [
+          "SATOR",
+          "AREPO",
+          "TENET",
+          "OPERA",
+          "ROTAS",
+          "VERSO",
+          "NEXUS"
+        ],
+        "verificacoes_aprovadas": 5,
+        "detalhes_verificacao": {
+          "registros_migrados": true,
+          "tabelas_migradas": true,
+          "faces_sator_utilizadas": true,
+          "relatorios_encontrados": true,
+          "dados_consistentes": true
+        }
+      }
+    },
+    "DISTRIBUICAO_HIPERCUBO_REAL": {
+      "status": "PASSOU",
+      "timestamp": "2025-10-09T14:11:41.007752",
+      "details": {
+        "faces_ativas": 7,
+        "total_registros_real": 28,
+        "distribuicao_por_face": {
+          "SATOR": 3,
+          "AREPO": 3,
+          "TENET": 2,
+          "ROTAS": 4,
+          "OPERA": 9,
+          "NEXUS": 3,
+          "VERSO": 4,
+          "ANVERSO": 0
+        },
+        "balanceamento_real": "0.222",
+        "utilizacao_media_real": "38.9%",
+        "verificacoes_aprovadas": 5,
+        "detalhes_verificacao": {
+          "faces_com_dados": true,
+          "distribuicao_existente": true,
+          "balanceamento_minimo": true,
+          "sem_sobrecarga_extrema": true,
+          "sistema_operacional": true
+        }
+      }
+    },
+    "ESTRUTURA_ARQUIVOS_REAL": {
+      "status": "PASSOU",
+      "timestamp": "2025-10-09T14:11:41.010617",
+      "details": {
+        "diretorios_verificados": 2,
+        "estrutura_detalhada": {
+          "kayosql_directory": {
+            "existe": true,
+            "arquivos_python": 155,
+            "subdiretorios": 28,
+            "tamanho_mb": 1.3880252838134766
+          },
+          "kayoscrypto_directory": {
+            "existe": true,
+            "arquivos_python": 9,
+            "subdiretorios": 6,
+            "tamanho_mb": 0.11532115936279297
+          }
+        },
+        "todos_diretorios_existem": true
+      }
+    }
+  },
+  "real_data_used": true,
+  "errors": []
+}

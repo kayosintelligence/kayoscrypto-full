@@ -1,0 +1,54 @@
+services:
+  db:
+    image: postgres:14
+    restart: always
+    environment:
+      POSTGRES_USER: kayos
+      POSTGRES_PASSWORD: kayospass
+      POSTGRES_DB: K_suite
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U kayos -d K_suite"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "5000:5000"
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_NAME: K_suite
+      DB_USER: kayos
+      DB_PASSWORD: kayospass
+    volumes:
+      - .:/app
+      - /app/dashboard-ui
+
+  dashboard:
+    build:
+      context: ./dashboard-ui
+      dockerfile: Dockerfile
+    environment:
+      - NODE_OPTIONS=--openssl-legacy-provider
+    ports:
+      - "5174:5173"
+    volumes:
+      - ./dashboard-ui:/usr/src/app
+      - /usr/src/app/node_modules
+    depends_on:
+      - app
+  
+volumes:
+  pgdata:

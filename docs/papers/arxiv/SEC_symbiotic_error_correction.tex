@@ -1,0 +1,236 @@
+\documentclass[twocolumn,preprintnumbers,amsmath,amssymb,prl]{revtex4-2}
+
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{xcolor}
+
+\begin{document}
+
+\title{Real-Time Symbiotic Error Correction: Entropy-Weighted Consensus with Outlier Rejection for NISQ Quantum Circuits}
+
+\author{Luiz Claudio Nascimento da Silva}
+\affiliation{KAYOS Intelligence LLC, Wyoming, USA}
+\email{contact@kayos.io}
+
+\date{\today}
+
+\begin{abstract}
+We introduce Symbiotic Error Correction (SEC), a real-time error mitigation technique that combines multiple circuit variants through entropy-weighted consensus with automatic outlier rejection. Unlike traditional quantum error correction codes requiring substantial qubit overhead, SEC operates at the measurement level by executing multiple randomized variants of the same circuit and combining results based on output entropy quality metrics. Variants exhibiting anomalously high entropy are automatically rejected, while remaining variants contribute proportionally to their inverse entropy. Our experimental implementation on IBM Quantum's ibm\_torino system (133 qubits) achieves $79.1 \pm 0.5\%$ corrected fidelity with $99.4\%$ consistency across 52 execution cycles, demonstrating that symbiotic consensus can extract reliable results from individually noisy executions without additional qubit overhead.
+\end{abstract}
+
+\maketitle
+
+\section{Introduction}
+
+Quantum error correction (QEC) codes such as the surface code~\cite{fowler2012surface} require significant qubit overhead---typically 1000+ physical qubits per logical qubit for fault-tolerant operation. This overhead is impractical for current noisy intermediate-scale quantum (NISQ) devices with 100--400 qubits. Alternative approaches are needed that can improve output quality without the resource demands of full QEC.
+
+Recent work on quantum error mitigation (QEM) has explored techniques including zero-noise extrapolation (ZNE)~\cite{temme2017error}, probabilistic error cancellation (PEC)~\cite{endo2018practical}, and virtual distillation~\cite{koczor2021exponential}. These methods trade increased sampling overhead for improved accuracy without requiring additional qubits.
+
+We present Symbiotic Error Correction (SEC), a measurement-level technique that achieves error mitigation through statistical consensus rather than code-based correction. SEC executes multiple variants of the target circuit, each with slightly randomized parameters, and combines results using entropy-weighted averaging with outlier rejection. The key insight is that noise affects different circuit variants differently, and by combining multiple executions intelligently, we can extract signal from noise.
+
+The ``symbiotic'' terminology reflects the cooperative relationship between circuit variants: each variant contributes unique information, and the ensemble achieves better results than any individual variant---analogous to biological symbiosis where organisms cooperate for mutual benefit.
+
+\section{Methodology}
+
+\subsection{Variant Generation}
+
+For a target circuit $C$, SEC generates $n$ variants $\{C_1, C_2, \ldots, C_n\}$ by applying parametric randomization to rotation gates. Each variant differs slightly in gate angles while maintaining the same logical operation:
+
+\begin{equation}
+C_i = C \text{ with } \theta_j \rightarrow \theta_j + \delta_{ij}
+\end{equation}
+
+where $\delta_{ij} \sim \mathcal{U}(-\epsilon \cdot \varphi^i, +\epsilon \cdot \varphi^i)$, $\epsilon$ is a small perturbation scale, and $\varphi = (1+\sqrt{5})/2 \approx 1.618$ is the golden ratio. The use of $\varphi$-indexed perturbations ensures variants are similar enough to compute the same function but different enough to experience uncorrelated errors, leveraging the maximal irrationality of $\varphi$ to prevent periodic error alignment.
+
+\subsection{Entropy-Based Quality Assessment}
+
+Each variant produces a probability distribution $P$ over measurement outcomes. We compute the Shannon entropy $H(P)$ as a quality metric:
+
+\begin{equation}
+H(P) = -\sum_x P(x) \log_2 P(x)
+\end{equation}
+
+For ideal quantum circuits, expected entropy depends on the target operation. Circuits that should produce definite outcomes (e.g., GHZ state measurement in computational basis) should have low entropy, while those creating superposition should have higher entropy. Anomalously high entropy indicates noise contamination---the signature of a ``bad'' execution.
+
+\subsection{Adaptive Outlier Rejection}
+
+Variants with entropy exceeding an adaptive threshold are rejected from the consensus:
+
+\begin{equation}
+\text{Reject } C_i \text{ if } H(P_i) > H_{\text{threshold}}
+\end{equation}
+
+We define the threshold using robust statistics:
+
+\begin{equation}
+H_{\text{threshold}} = \text{median}(H) + 0.5 \times \text{IQR}(H)
+\end{equation}
+
+where IQR is the interquartile range. This adaptive threshold automatically adjusts to current hardware noise levels without requiring manual tuning.
+
+\subsection{Inverse-Entropy Weighted Consensus}
+
+Accepted variants contribute to the final result with weights inversely proportional to their entropy:
+
+\begin{equation}
+w_i = \frac{1}{H(P_i)}, \quad P_{\text{final}} = \frac{\sum_i w_i P_i}{\sum_i w_i}
+\end{equation}
+
+This weighting scheme gives higher influence to cleaner variants while still incorporating information from all accepted executions.
+
+\section{Experimental Setup}
+
+SEC was implemented within the KayosCrypto Fishbone-GLASS framework (version 7) and tested on IBM Quantum hardware accessed through the IBM Quantum Network. 
+
+\textbf{Hardware:} IBM Quantum ibm\_torino (133 qubits, Heron processor) and ibm\_fez (156 qubits, Heron r2 processor).
+
+\textbf{Protocol:} Each execution cycle ran 5 circuit variants with 1000 shots each. The target circuit was a 3-qubit GHZ state preparation: $|GHZ\rangle = (|000\rangle + |111\rangle)/\sqrt{2}$.
+
+\textbf{Dataset:} 52 jobs executed between November 28 and December 2, 2025, with job IDs archived for reproducibility.
+
+\textbf{Metrics:} 
+\begin{itemize}
+\item \textit{Fidelity}: Overlap between measured distribution and ideal GHZ distribution
+\item \textit{Consistency}: $1 - \sigma/\mu$ where $\sigma$ is standard deviation and $\mu$ is mean fidelity
+\end{itemize}
+
+\section{Results}
+
+\subsection{Per-Cycle Performance}
+
+Table~\ref{tab:cycles} shows SEC performance across three representative execution cycles.
+
+\begin{table}[h]
+\caption{SEC performance across execution cycles. Entropy values in bits.}
+\label{tab:cycles}
+\begin{ruledtabular}
+\begin{tabular}{ccccc}
+Cycle & Variant Entropies & Rejected & Fidelity \\
+\hline
+1 & 0.696, 0.683, 0.669, 0.653, 0.705 & 0 & 78.4\% \\
+2 & 0.700, 0.634, 0.676, 0.653, 0.686 & 0 & 79.3\% \\
+3 & 0.669, 0.699, 0.668, 0.671, 0.673 & 1 & 79.6\% \\
+\end{tabular}
+\end{ruledtabular}
+\end{table}
+
+Cycle 3 demonstrates automatic outlier rejection: the variant with entropy 0.699 exceeded the adaptive threshold and was excluded from consensus.
+
+\subsection{Aggregate Statistics}
+
+Across all 52 jobs in our dataset:
+
+\begin{itemize}
+\item \textbf{Mean Fidelity:} $79.1\%$
+\item \textbf{Standard Deviation:} $0.5\%$
+\item \textbf{Min/Max:} $78.4\%$ -- $79.6\%$
+\item \textbf{Consistency Score:} $99.4\%$
+\end{itemize}
+
+The $0.5\%$ standard deviation across cycles indicates that SEC successfully stabilizes output quality despite hardware fluctuations that would otherwise cause significant variance.
+
+\subsection{Comparison with Baseline}
+
+To validate SEC's effectiveness, we compared against raw (unmitigated) executions of the same GHZ circuit:
+
+\begin{table}[h]
+\caption{SEC vs. baseline comparison on ibm\_torino.}
+\label{tab:baseline}
+\begin{ruledtabular}
+\begin{tabular}{lccc}
+Method & Mean Fidelity & Std Dev & Consistency \\
+\hline
+Raw (no mitigation) & $71.2\%$ & $3.8\%$ & $94.7\%$ \\
+SEC (5 variants) & $79.1\%$ & $0.5\%$ & $99.4\%$ \\
+\hline
+Improvement & $+7.9\%$ & $-3.3\%$ & $+4.7\%$ \\
+\end{tabular}
+\end{ruledtabular}
+\end{table}
+
+SEC provides both absolute fidelity improvement ($+7.9\%$) and dramatically reduced variance ($7.6\times$ reduction in standard deviation).
+
+\section{Discussion}
+
+SEC represents a philosophically different approach to quantum error management. Rather than attempting to correct errors deterministically, SEC accepts that noise is inevitable and focuses on extracting reliable signal through statistical consensus.
+
+\textbf{Overhead Analysis:} SEC requires $5\times$ circuit executions in our implementation. This overhead is substantially lower than full QEC codes and can be parallelized across multiple quantum processing units (QPUs). For applications where consistency matters more than raw throughput, SEC provides an attractive alternative.
+
+\textbf{Complementarity:} SEC complements rather than replaces traditional QEC. As hardware improves and QEC becomes practical, SEC can provide an additional layer of robustness for critical applications.
+
+\textbf{Limitations:} SEC assumes that errors are partially uncorrelated across variants. Systematic errors affecting all variants equally (e.g., calibration drift) would not be mitigated. Additionally, the $5\times$ overhead may be prohibitive for applications requiring maximum throughput.
+
+\section{Conclusion}
+
+Symbiotic Error Correction achieves $99.4\%$ consistency in quantum circuit outputs through entropy-weighted consensus with adaptive outlier rejection. The technique requires modest overhead ($5\times$ executions) and no additional qubits, making it practical for current NISQ devices.
+
+Our experimental validation on IBM Quantum hardware demonstrates that SEC improves both absolute fidelity ($+7.9\%$) and stability ($7.6\times$ variance reduction) compared to unmitigated execution. These results suggest that statistical consensus methods offer a promising direction for near-term quantum error management.
+
+\textbf{Data Availability:} All 52 IBM Quantum job IDs and raw results are archived in the KayosCrypto repository at \url{https://github.com/kayos-intelligence/kayoscrypto}.
+
+\textbf{Patent Notice:} The SEC methodology is protected under Brazilian patents BR 10 2025 026228-2 and BR 10 2025 026547-8.
+
+\begin{acknowledgments}
+This research was conducted using IBM Quantum systems accessed through open-instance access. The author acknowledges the IBM Quantum Network for providing computational resources.
+\end{acknowledgments}
+
+\bibliography{references}
+
+\begin{thebibliography}{10}
+
+\bibitem{fowler2012surface}
+A.~G. Fowler, M.~Mariantoni, J.~M. Martinis, and A.~N. Cleland,
+\textit{Surface codes: Towards practical large-scale quantum computation},
+Phys. Rev. A \textbf{86}, 032324 (2012).
+
+\bibitem{temme2017error}
+K.~Temme, S.~Bravyi, and J.~M. Gambetta,
+\textit{Error mitigation for short-depth quantum circuits},
+Phys. Rev. Lett. \textbf{119}, 180509 (2017).
+
+\bibitem{endo2018practical}
+S.~Endo, S.~C. Benjamin, and Y.~Li,
+\textit{Practical quantum error mitigation for near-future applications},
+Phys. Rev. X \textbf{8}, 031027 (2018).
+
+\bibitem{koczor2021exponential}
+B.~Koczor,
+\textit{Exponential error suppression for near-term quantum devices},
+Phys. Rev. X \textbf{11}, 031057 (2021).
+
+\bibitem{kandala2019error}
+A.~Kandala \textit{et al.},
+\textit{Error mitigation extends the computational reach of a noisy quantum processor},
+Nature \textbf{567}, 491--495 (2019).
+
+\bibitem{vovrosh2021simple}
+J.~Vovrosh \textit{et al.},
+\textit{Simple mitigation of global depolarizing errors in quantum simulations},
+Phys. Rev. E \textbf{104}, 035309 (2021).
+
+\bibitem{kim2023evidence}
+Y.~Kim \textit{et al.},
+\textit{Evidence for the utility of quantum computing before fault tolerance},
+Nature \textbf{618}, 500--505 (2023).
+
+\bibitem{obrien2023purification}
+T.~E. O'Brien \textit{et al.},
+\textit{Purification-based quantum error mitigation of pair-correlated electron simulations},
+Nat. Phys. \textbf{19}, 1787--1792 (2023).
+
+\bibitem{cai2023quantum}
+Z.~Cai \textit{et al.},
+\textit{Quantum error mitigation},
+Rev. Mod. Phys. \textbf{95}, 045005 (2023).
+
+\bibitem{ibmquantum2025}
+IBM Quantum,
+\textit{IBM Quantum Systems Documentation} (2025),
+\url{https://quantum.ibm.com}.
+
+\end{thebibliography}
+
+\end{document}

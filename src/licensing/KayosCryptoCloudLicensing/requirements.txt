@@ -1,0 +1,9 @@
+# requirements.txt
+flask
+flask-cors
+psycopg2-binary
+python-dotenv
+cryptography==45.0.5
+PyJWT==2.10.1
+redis==6.4.0
+flask-limiter

@@ -1,0 +1,98 @@
+{
+  "timestamp": "2025-10-09T14:11:21.345846",
+  "validation_id": "KAYOSQL_VALIDATION_REAL_20251009_141121",
+  "status": "BOM",
+  "tests_run": 4,
+  "tests_passed": 3,
+  "tests_failed": 1,
+  "validation_phases": {
+    "DISPONIBILIDADE_KAYOSQL_REAL": {
+      "status": "FALHOU",
+      "timestamp": "2025-10-09T14:11:21.345911",
+      "details": {
+        "arquivos_existentes": 2,
+        "arquivos_ausentes": [
+          "/home/kbe/KAYOS_SYSTEMS/KayosCrypto/test_kayoscrypto_integration.py"
+        ]
+      }
+    },
+    "INTEGRIDADE_DADOS_REAL": {
+      "status": "PASSOU",
+      "timestamp": "2025-10-09T14:11:21.346175",
+      "details": {
+        "relatorios_analisados": 1,
+        "total_registros_real": 28,
+        "total_tabelas_real": 8,
+        "faces_utilizadas_real": [
+          "OPERA",
+          "ROTAS",
+          "VERSO",
+          "AREPO",
+          "TENET",
+          "SATOR",
+          "NEXUS"
+        ],
+        "verificacoes_aprovadas": 5,
+        "detalhes_verificacao": {
+          "registros_migrados": true,
+          "tabelas_migradas": true,
+          "faces_sator_utilizadas": true,
+          "relatorios_encontrados": true,
+          "dados_consistentes": true
+        }
+      }
+    },
+    "DISTRIBUICAO_HIPERCUBO_REAL": {
+      "status": "PASSOU",
+      "timestamp": "2025-10-09T14:11:21.346794",
+      "details": {
+        "faces_ativas": 7,
+        "total_registros_real": 28,
+        "distribuicao_por_face": {
+          "SATOR": 3,
+          "AREPO": 3,
+          "TENET": 2,
+          "ROTAS": 4,
+          "OPERA": 9,
+          "NEXUS": 3,
+          "VERSO": 4,
+          "ANVERSO": 0
+        },
+        "balanceamento_real": "0.222",
+        "utilizacao_media_real": "38.9%",
+        "verificacoes_aprovadas": 5,
+        "detalhes_verificacao": {
+          "faces_com_dados": true,
+          "distribuicao_existente": true,
+          "balanceamento_minimo": true,
+          "sem_sobrecarga_extrema": true,
+          "sistema_operacional": true
+        }
+      }
+    },
+    "ESTRUTURA_ARQUIVOS_REAL": {
+      "status": "PASSOU",
+      "timestamp": "2025-10-09T14:11:21.349465",
+      "details": {
+        "diretorios_verificados": 2,
+        "estrutura_detalhada": {
+          "kayosql_directory": {
+            "existe": true,
+            "arquivos_python": 155,
+            "subdiretorios": 28,
+            "tamanho_mb": 1.3880252838134766
+          },
+          "kayoscrypto_directory": {
+            "existe": true,
+            "arquivos_python": 9,
+            "subdiretorios": 6,
+            "tamanho_mb": 0.11530685424804688
+          }
+        },
+        "todos_diretorios_existem": true
+      }
+    }
+  },
+  "real_data_used": true,
+  "errors": []
+}

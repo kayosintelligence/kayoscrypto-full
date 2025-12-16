@@ -1,0 +1,1 @@
+/home/kbe/KAYOS_SYSTEMS/KayosCrypto/src/implementations/rust/target/release/quick_bench: /home/kbe/KAYOS_SYSTEMS/KayosCrypto/src/implementations/rust/src/bin/quick_bench.rs /home/kbe/KAYOS_SYSTEMS/KayosCrypto/src/implementations/rust/src/lib.rs

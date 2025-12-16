@@ -1,0 +1,85 @@
+{
+  "native_integration_report": {
+    "generated_at": "2025-10-09T13:52:22.657298",
+    "test_duration": 0.00402,
+    "environment": {
+      "working_directory": "/home/kbe/KAYOS_SYSTEMS/KayosCrypto",
+      "kayoscrypto_available": true,
+      "kayosql_initialized": true
+    },
+    "database_statistics": {
+      "total_tables": 3,
+      "total_records": 8,
+      "active_users": 1,
+      "audit_entries": 21
+    },
+    "integration_data": {
+      "processed_datasets": {
+        "financial_records": {
+          "records_processed": 3,
+          "encryption_details": [
+            {
+              "id": 1,
+              "encrypted_size": 82,
+              "original_size": 62
+            },
+            {
+              "id": 2,
+              "encrypted_size": 82,
+              "original_size": 62
+            },
+            {
+              "id": 3,
+              "encrypted_size": 81,
+              "original_size": 61
+            }
+          ],
+          "table_name": "native_crypto_financial_records"
+        },
+        "user_credentials": {
+          "records_processed": 3,
+          "encryption_details": [
+            {
+              "id": 1,
+              "encrypted_size": 91,
+              "original_size": 71
+            },
+            {
+              "id": 2,
+              "encrypted_size": 90,
+              "original_size": 70
+            },
+            {
+              "id": 3,
+              "encrypted_size": 83,
+              "original_size": 63
+            }
+          ],
+          "table_name": "native_crypto_user_credentials"
+        },
+        "encryption_keys": {
+          "records_processed": 2,
+          "encryption_details": [
+            {
+              "id": 1,
+              "encrypted_size": 109,
+              "original_size": 89
+            },
+            {
+              "id": 2,
+              "encrypted_size": 114,
+              "original_size": 94
+            }
+          ],
+          "table_name": "native_crypto_encryption_keys"
+        }
+      }
+    },
+    "native_crypto_features": {
+      "symbiotic_aes_encryption": true,
+      "hypercube_sator_3d": true,
+      "zero_external_dependencies": true,
+      "quantum_resistant_algorithms": true
+    }
+  }
+}

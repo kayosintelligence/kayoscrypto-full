@@ -1,0 +1,32 @@
+{
+  "timestamp": "2025-10-09T14:19:35.189137",
+  "test_id": "STRESS_TEST_20251009_141935",
+  "status": "CONCLUÍDO",
+  "databases_created": 3,
+  "total_records": 31500,
+  "migration_time": 1.6144332885742188,
+  "throughput": 9984.83935612695,
+  "results": [
+    {
+      "subsystem": "CloudLicensing",
+      "status": "SUCCESS",
+      "records": 6500,
+      "duration": 0.6511359214782715,
+      "throughput": 9982.554771733487
+    },
+    {
+      "subsystem": "Enterprise3D",
+      "status": "SUCCESS",
+      "records": 10000,
+      "duration": 1.0013294219970703,
+      "throughput": 9986.723430193244
+    },
+    {
+      "subsystem": "Suite",
+      "status": "SUCCESS",
+      "records": 15000,
+      "duration": 1.5022172927856445,
+      "throughput": 9985.239866454122
+    }
+  ]
+}

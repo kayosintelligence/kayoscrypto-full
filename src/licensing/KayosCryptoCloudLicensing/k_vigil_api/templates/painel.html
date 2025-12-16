@@ -1,0 +1,150 @@
+<!-- 📄 Arquivo: vigil_api/templates/painel.html -->
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Painel KayosCrypto</title>
+  <style>
+    body {
+      background-color: #0d0d0d;
+      color: #00ffe1;
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    input, button {
+      margin: 5px 0;
+      padding: 10px;
+      width: 100%;
+      background-color: #111;
+      border: 1px solid #00ffe1;
+      color: #00ffe1;
+    }
+    button:hover {
+      background-color: #00ffe1;
+      color: #000;
+      cursor: pointer;
+    }
+    .card {
+      border: 1px solid #00ffe1;
+      padding: 10px;
+      margin-top: 10px;
+      background-color: #111;
+    }
+    .btn-sm {
+      width: auto;
+      display: inline-block;
+      margin-right: 5px;
+    }
+  </style>
+</head>
+<body>
+
+<h2>Painel KayosCrypto – Gerador & Validador</h2>
+
+<h3>Gerar Licença</h3>
+<form id="form-gerar">
+  <input type="text" id="uuid_gerar" placeholder="UUID será gerado automaticamente" readonly>
+  <button type="submit">Gerar Chave com UUID</button>
+</form>
+
+<h3>Validar Licença</h3>
+<form id="form-validar">
+  <input type="text" id="uuid_validar" placeholder="UUID" required>
+  <input type="text" id="chave_validar" placeholder="Chave de Licença" required>
+  <button type="submit">Validar Chave</button>
+</form>
+
+<h3>Licenças Registradas</h3>
+<button onclick="atualizarLicencas()">Atualizar Lista</button>
+<div id="licencas"></div>
+
+<h3>👤 Kai, IA embarcada</h3>
+<p id="kai-msg">Olá! Pronto para gerar ou validar uma licença segura?</p>
+
+<script>
+function gerarUUID() {
+  return crypto.randomUUID();
+}
+
+async function atualizarLicencas() {
+  const res = await fetch("/api/licencas");
+  const data = await res.json();
+  const div = document.getElementById("licencas");
+  div.innerHTML = "";
+  data.forEach(licenca => {
+    const card = document.createElement("div");
+    card.className = "card";
+    card.innerHTML = `
+      <strong>UUID:</strong> ${licenca.uuid}<br>
+      <strong>Chave:</strong> ${licenca.chave}<br>
+      <strong>Ativa:</strong> ${licenca.ativa ? "Sim" : "Não"}<br>
+      <strong>Criada em:</strong> ${licenca.criada_em}<br><br>
+      <button class="btn-sm" onclick="regenerar('${licenca.uuid}')">🔄 Regenerar</button>
+      <button class="btn-sm" onclick="desativar('${licenca.uuid}')">🚫 Desativar</button>
+      <button class="btn-sm" onclick="excluir('${licenca.uuid}')">❌ Excluir</button>
+    `;
+    div.appendChild(card);
+  });
+}
+
+document.getElementById("form-gerar").addEventListener("submit", async e => {
+  e.preventDefault();
+  const uuid = gerarUUID();
+  document.getElementById("uuid_gerar").value = uuid;
+  await fetch("/api/gerar", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ uuid })
+  });
+  document.getElementById("kai-msg").innerText = "✅ Chave gerada com sucesso!";
+  atualizarLicencas();
+});
+
+document.getElementById("form-validar").addEventListener("submit", async e => {
+  e.preventDefault();
+  const uuid = document.getElementById("uuid_validar").value;
+  const chave = document.getElementById("chave_validar").value;
+  const res = await fetch("/api/validar", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ uuid, chave })
+  });
+  const data = await res.json();
+  alert("Licença válida? " + data.valido);
+  document.getElementById("kai-msg").innerText = data.valido ? "✅ Licença válida!" : "❌ Licença inválida!";
+});
+
+async function regenerar(uuid) {
+  await fetch("/api/regenerar", {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ uuid })
+  });
+  atualizarLicencas();
+}
+async function desativar(uuid) {
+  await fetch("/api/desativar", {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ uuid })
+  });
+  atualizarLicencas();
+}
+async function excluir(uuid) {
+  await fetch("/api/excluir", {
+    method: "DELETE",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ uuid })
+  });
+  atualizarLicencas();
+}
+
+window.onload = () => {
+  document.getElementById("uuid_gerar").value = gerarUUID();
+  atualizarLicencas();
+}
+</script>
+
+</body>
+</html>

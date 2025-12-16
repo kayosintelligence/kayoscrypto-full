@@ -1,0 +1,167 @@
+# ============================================
+# KAYOSCRYPTO - GITIGNORE DE SEGURANÇA
+# ============================================
+# Este arquivo PROTEGE informações sensíveis
+# de serem expostas em repositórios públicos
+# ============================================
+
+# ==========================================
+# 🔴 DOCUMENTOS CONFIDENCIAIS - NUNCA EXPOR
+# ==========================================
+
+# Documentos com referências à inspiração original
+PLANO_EVOLUCAO_EZEKIEL.md
+RELATORIO_EVOLUCAO_V4.md
+RELATORIO_ULTIMATE_FINAL.md
+*ezekiel*.md
+*Ezekiel*.md
+*EZEKIEL*.md
+
+# Documentos internos de segurança
+CORRECAO_SEGURANCA_INTELECTUAL.md
+docs/technical/GEOMETRIC_PHILOSOPHY.md
+
+# Qualquer arquivo com "confidencial" no nome
+*CONFIDENCIAL*.md
+*confidencial*.md
+*INTERNAL*.md
+*internal*.md
+
+# Documentos históricos de desenvolvimento
+TESTE_VALIDACAO_REPORT.md
+PERMUTACAO_GEOMETRICA_FINAL.md
+KAYOSCRYPTO_VALIDATION_COMPLETE.md
+TRANSFORMACAO_INICIO.md
+OPCAO_B_SUCCESS.md
+
+# Relatórios executivos internos
+SUMARIO_EXECUTIVO.md
+STATUS_FINAL_CONSOLIDADO.md
+MISSAO_CUMPRIDA.md
+CONSOLIDACAO_*.md
+CONFIRMACAO_*.md
+
+# ==========================================
+# 🟡 DADOS E TESTES - NÃO EXPOR
+# ==========================================
+
+# Dados de teste
+*.bin
+*.dat
+
+# Arquivos grandes de teste (>50MB)
+artifacts/nist_sts/*_aggregate_ascii.txt
+artifacts/nist_sts/kayoscrypto_sequences_ascii.txt
+artifacts/nist_sts/run2/kayoscrypto_sequences_ascii.txt
+np
+tools/sts-2.1.2/sts-2.1.2/data/epsilon
+data/
+test_data/
+benchmarks/results/*.json
+benchmarks/results/*.csv
+
+# Logs e outputs
+*.log
+logs/
+*.out
+*.err
+
+# Resultados de performance
+performance_*.txt
+avalanche_*.txt
+
+# ==========================================
+# 🟢 PADRÕES PYTHON NORMAIS
+# ==========================================
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Backup files
+*.bak
+*.backup
+*.old
+.archive/
+
+# Temporary files
+*.tmp
+temp/
+tmp/
+
+# ==========================================
+# 🔵 EXCEÇÕES - PODE EXPOR
+# ==========================================
+
+# Documentos públicos seguros (force include)
+!README.md
+!CHANGELOG.md
+!LICENSE
+!CONTRIBUTING.md
+!CODE_OF_CONDUCT.md
+
+# Documentação pública segura
+!docs/public/
+!docs/public/**
+
+# Exemplos seguros
+!examples/
+!examples/**

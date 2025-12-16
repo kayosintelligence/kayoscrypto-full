@@ -1,0 +1,75 @@
+\subsection{SATOR 5D Framework: A Validator, Not a Generator}
+
+\subsubsection{Initial Hypothesis}
+
+Early development explored using the SATOR 5D framework as a standalone random number generator. The framework's 22-year mathematical foundation and palindromic geometry suggested potential for direct cryptographic generation.
+
+\subsubsection{Experimental Results}
+
+We subjected SATOR 5D raw output to the PractRand test battery~\cite{doty-humphrey2014practrand}, a rigorous suite designed to detect subtle statistical biases in RNGs.
+
+\textbf{Results (1 GB sample):}
+\begin{itemize}
+    \item BCFN tests: 17/17 catastrophic failures
+    \item Gap-16 tests: Complete failure (p $\approx 0$)
+    \item FPF tests: 21/21 failures (palindrome detection)
+    \item DC6 tests: Distribution anomalies (R $> +49574$)
+    \item \textbf{Total:} $>$120 test failures
+\end{itemize}
+
+\subsubsection{Root Cause Analysis}
+
+The SATOR framework's palindromic geometry, while excellent for \emph{detecting} patterns in data, inherently \emph{produces} detectable patterns when used generatively:
+
+\begin{enumerate}
+    \item \textbf{Palindromic Symmetry:} The 5$\times$5$\times$5 cube reads identically in all six directions, creating predictable structure.
+    \item \textbf{Fibonacci Oscillations:} Golden ratio modulation ($\phi \approx 1.618$) introduces periodic components.
+    \item \textbf{Merkaba Balance:} $\triangle$+$\triangledown$ geometry enforces symmetry constraints that reduce entropy.
+    \item \textbf{Ezequiel Rotations:} Deterministic transformations create exploitable patterns.
+\end{enumerate}
+
+\subsubsection{Architectural Solution}
+
+KayosCrypto adopts a \textbf{generator-validator architecture}:
+
+\begin{enumerate}
+    \item \textbf{ChaCha20} (RFC 8439) serves as the primary cryptographic generator, providing proven security.
+    \item \textbf{SATOR 5D} operates as a geometric validator, assigning quality scores to ChaCha20 output.
+    \item If validation fails (score $< 0.85$), regeneration occurs with a new key.
+\end{enumerate}
+
+\subsubsection{Validation of Corrected Architecture}
+
+Table~\ref{tab:practrand_comparison} shows PractRand results for both configurations:
+
+\begin{table}[h]
+\centering
+\caption{PractRand Results: SATOR vs ChaCha20+SATOR}
+\label{tab:practrand_comparison}
+\begin{tabular}{lcc}
+\toprule
+Configuration & Data Tested & Anomalies \\
+\midrule
+SATOR 5D only & 1 GB & 120+ FAIL \\
+ChaCha20 + SATOR validation & 32 GB & 0 \\
+\midrule
+ChaCha20 only (baseline) & 1 TB & 0 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsubsection{Implications}
+
+This finding reinforces a key principle in cryptographic design: \textbf{generation and validation are distinct concerns}. SATOR 5D's geometric framework excels as a quality metric but requires a cryptographically sound generator (ChaCha20) as its foundation.
+
+\subsubsection{Unique Contribution}
+
+To our knowledge, KayosCrypto is the \textbf{only cryptographic system} that combines:
+\begin{itemize}
+    \item Standard cryptographic generation (ChaCha20)
+    \item Geometric entropy validation (SATOR 5D)
+    \item Symbiotic multi-nucleus architecture
+    \item Complete statistical validation suite
+\end{itemize}
+
+This architecture provides defense-in-depth: even if ChaCha20 were compromised, the SATOR validator would detect quality degradation before deployment.

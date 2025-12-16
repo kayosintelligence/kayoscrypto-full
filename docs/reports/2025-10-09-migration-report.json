@@ -1,0 +1,327 @@
+{
+  "timestamp": "2025-10-09T14:06:33.342362",
+  "migration_id": "KAYOSCRYPTO_TO_KAYOSQL_20251009_140633",
+  "status": "CONCLUÍDO",
+  "databases_found": [
+    {
+      "path": "/home/kbe/KAYOS_SYSTEMS/KayosCrypto/kayos_suite_demo.db",
+      "size": 20480,
+      "tables_count": 3,
+      "tables": [
+        "system_config",
+        "system_logs",
+        "sync_data"
+      ]
+    },
+    {
+      "path": "/home/kbe/KAYOS_SYSTEMS/KayosCrypto/kayos_enterprise3d_demo.db",
+      "size": 12288,
+      "tables_count": 2,
+      "tables": [
+        "hypercube_operations",
+        "audit_trail"
+      ]
+    },
+    {
+      "path": "/home/kbe/KAYOS_SYSTEMS/KayosCrypto/kayos_licensing_demo.db",
+      "size": 24576,
+      "tables_count": 3,
+      "tables": [
+        "users",
+        "licenses",
+        "crypto_keys"
+      ]
+    }
+  ],
+  "tables_migrated": [
+    {
+      "table_original": "system_config",
+      "table_kayosql": "MIGRATED_SYSTEM_CONFIG",
+      "records_count": 4,
+      "sator_face": "ROTAS",
+      "columns": [
+        "id",
+        "config_key",
+        "config_value",
+        "config_type",
+        "last_updated"
+      ],
+      "status": "MIGRATED"
+    },
+    {
+      "table_original": "system_logs",
+      "table_kayosql": "MIGRATED_SYSTEM_LOGS",
+      "records_count": 5,
+      "sator_face": "OPERA",
+      "columns": [
+        "id",
+        "log_level",
+        "message",
+        "component",
+        "timestamp",
+        "user_id"
+      ],
+      "status": "MIGRATED"
+    },
+    {
+      "table_original": "sync_data",
+      "table_kayosql": "MIGRATED_SYNC_DATA",
+      "records_count": 3,
+      "sator_face": "NEXUS",
+      "columns": [
+        "id",
+        "sync_key",
+        "last_sync",
+        "status",
+        "data_hash"
+      ],
+      "status": "MIGRATED"
+    },
+    {
+      "table_original": "hypercube_operations",
+      "table_kayosql": "MIGRATED_HYPERCUBE_OPERATIONS",
+      "records_count": 4,
+      "sator_face": "AREPO",
+      "columns": [
+        "id",
+        "operation_type",
+        "face_name",
+        "operation_data",
+        "timestamp",
+        "status"
+      ],
+      "status": "MIGRATED"
+    },
+    {
+      "table_original": "audit_trail",
+      "table_kayosql": "MIGRATED_AUDIT_TRAIL",
+      "records_count": 4,
+      "sator_face": "VERSO",
+      "columns": [
+        "id",
+        "action",
+        "user_id",
+        "resource",
+        "timestamp",
+        "details"
+      ],
+      "status": "MIGRATED"
+    },
+    {
+      "table_original": "users",
+      "table_kayosql": "MIGRATED_USERS",
+      "records_count": 3,
+      "sator_face": "SATOR",
+      "columns": [
+        "id",
+        "username",
+        "email",
+        "created_at",
+        "license_type",
+        "is_active"
+      ],
+      "status": "MIGRATED"
+    },
+    {
+      "table_original": "licenses",
+      "table_kayosql": "MIGRATED_LICENSES",
+      "records_count": 3,
+      "sator_face": "AREPO",
+      "columns": [
+        "id",
+        "license_key",
+        "user_id",
+        "product_name",
+        "expires_at",
+        "features"
+      ],
+      "status": "MIGRATED"
+    },
+    {
+      "table_original": "crypto_keys",
+      "table_kayosql": "MIGRATED_CRYPTO_KEYS",
+      "records_count": 2,
+      "sator_face": "TENET",
+      "columns": [
+        "id",
+        "key_name",
+        "key_data",
+        "algorithm",
+        "created_at",
+        "expires_at"
+      ],
+      "status": "MIGRATED"
+    }
+  ],
+  "records_migrated": 28,
+  "errors": [],
+  "phases": {
+    "DESCOBERTA_DATABASES": {
+      "status": "CONCLUÍDO",
+      "timestamp": "2025-10-09T14:06:34.168908",
+      "details": {
+        "databases_encontrados": 3,
+        "total_tabelas": 8
+      }
+    },
+    "INICIALIZACAO_KAYOSQL": {
+      "status": "CONCLUÍDO",
+      "timestamp": "2025-10-09T14:06:34.168957",
+      "details": {
+        "sistema": "KayosQL Enterprise Unified",
+        "hipercubo": "KAYOSCRYPTO_MIGRATION",
+        "faces_ativas": 8
+      }
+    },
+    "MIGRACAO_COMPLETA": {
+      "status": "CONCLUÍDO",
+      "timestamp": "2025-10-09T14:06:34.169518",
+      "details": {
+        "databases_migrados": 3,
+        "tabelas_migradas": 8,
+        "registros_totais": 28
+      }
+    }
+  },
+  "migration_results": [
+    {
+      "database": "/home/kbe/KAYOS_SYSTEMS/KayosCrypto/kayos_suite_demo.db",
+      "tables": [
+        {
+          "table_original": "system_config",
+          "table_kayosql": "MIGRATED_SYSTEM_CONFIG",
+          "records_count": 4,
+          "sator_face": "ROTAS",
+          "columns": [
+            "id",
+            "config_key",
+            "config_value",
+            "config_type",
+            "last_updated"
+          ],
+          "status": "MIGRATED"
+        },
+        {
+          "table_original": "system_logs",
+          "table_kayosql": "MIGRATED_SYSTEM_LOGS",
+          "records_count": 5,
+          "sator_face": "OPERA",
+          "columns": [
+            "id",
+            "log_level",
+            "message",
+            "component",
+            "timestamp",
+            "user_id"
+          ],
+          "status": "MIGRATED"
+        },
+        {
+          "table_original": "sync_data",
+          "table_kayosql": "MIGRATED_SYNC_DATA",
+          "records_count": 3,
+          "sator_face": "NEXUS",
+          "columns": [
+            "id",
+            "sync_key",
+            "last_sync",
+            "status",
+            "data_hash"
+          ],
+          "status": "MIGRATED"
+        }
+      ],
+      "total_records": 12,
+      "status": "COMPLETED"
+    },
+    {
+      "database": "/home/kbe/KAYOS_SYSTEMS/KayosCrypto/kayos_enterprise3d_demo.db",
+      "tables": [
+        {
+          "table_original": "hypercube_operations",
+          "table_kayosql": "MIGRATED_HYPERCUBE_OPERATIONS",
+          "records_count": 4,
+          "sator_face": "AREPO",
+          "columns": [
+            "id",
+            "operation_type",
+            "face_name",
+            "operation_data",
+            "timestamp",
+            "status"
+          ],
+          "status": "MIGRATED"
+        },
+        {
+          "table_original": "audit_trail",
+          "table_kayosql": "MIGRATED_AUDIT_TRAIL",
+          "records_count": 4,
+          "sator_face": "VERSO",
+          "columns": [
+            "id",
+            "action",
+            "user_id",
+            "resource",
+            "timestamp",
+            "details"
+          ],
+          "status": "MIGRATED"
+        }
+      ],
+      "total_records": 8,
+      "status": "COMPLETED"
+    },
+    {
+      "database": "/home/kbe/KAYOS_SYSTEMS/KayosCrypto/kayos_licensing_demo.db",
+      "tables": [
+        {
+          "table_original": "users",
+          "table_kayosql": "MIGRATED_USERS",
+          "records_count": 3,
+          "sator_face": "SATOR",
+          "columns": [
+            "id",
+            "username",
+            "email",
+            "created_at",
+            "license_type",
+            "is_active"
+          ],
+          "status": "MIGRATED"
+        },
+        {
+          "table_original": "licenses",
+          "table_kayosql": "MIGRATED_LICENSES",
+          "records_count": 3,
+          "sator_face": "AREPO",
+          "columns": [
+            "id",
+            "license_key",
+            "user_id",
+            "product_name",
+            "expires_at",
+            "features"
+          ],
+          "status": "MIGRATED"
+        },
+        {
+          "table_original": "crypto_keys",
+          "table_kayosql": "MIGRATED_CRYPTO_KEYS",
+          "records_count": 2,
+          "sator_face": "TENET",
+          "columns": [
+            "id",
+            "key_name",
+            "key_data",
+            "algorithm",
+            "created_at",
+            "expires_at"
+          ],
+          "status": "MIGRATED"
+        }
+      ],
+      "total_records": 8,
+      "status": "COMPLETED"
+    }
+  ]
+}

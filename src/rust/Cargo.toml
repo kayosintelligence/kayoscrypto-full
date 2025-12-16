@@ -1,0 +1,11 @@
+[workspace]
+members = [
+    "kayoscrypto-core",
+    "kayoscrypto-server",
+    "kayoscrypto-cli"
+]
+
+resolver = "2"
+
+[workspace.package]
+edition = "2021"

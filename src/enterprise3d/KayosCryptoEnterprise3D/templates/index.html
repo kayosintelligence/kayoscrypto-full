@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KayosCrypto 3D Enterprise</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            text-align: center;
+            padding: 40px 0;
+            color: white;
+        }
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        .nav {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .nav-link {
+            background: white;
+            color: #667eea;
+            padding: 15px 30px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .nav-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+            background: #667eea;
+            color: white;
+        }
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+        .feature-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .feature-card h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+        .status {
+            background: rgba(255,255,255,0.9);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        .status.online {
+            border-left: 5px solid #4CAF50;
+        }
+        .cube-visual {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto;
+            position: relative;
+            transform-style: preserve-3d;
+            transform: rotateX(25deg) rotateY(25deg);
+            animation: rotate 20s infinite linear;
+        }
+        @keyframes rotate {
+            from { transform: rotateX(25deg) rotateY(0deg); }
+            to { transform: rotateX(25deg) rotateY(360deg); }
+        }
+        .face {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: rgba(102, 126, 234, 0.8);
+            border: 2px solid white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+        .front { transform: translateZ(100px); }
+        .back { transform: translateZ(-100px) rotateY(180deg); }
+        .right { transform: translateX(100px) rotateY(90deg); }
+        .left { transform: translateX(-100px) rotateY(-90deg); }
+        .top { transform: translateY(-100px) rotateX(90deg); }
+        .bottom { transform: translateY(100px) rotateX(-90deg); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎲 KayosCrypto 3D Enterprise</h1>
+            <p>Sistema de Criptografia Multidimensional</p>
+        </div>
+
+        <div class="status online">
+            <h2>✅ Sistema Operacional</h2>
+            <p>Database: k_crypto | Schema: kayos_enterprise | Versão: 3.0.0</p>
+        </div>
+
+        <div class="nav">
+            <div class="nav-links">
+                <a href="/dashboard" class="nav-link">📊 Dashboard</a>
+                <a href="/cubes" class="nav-link">🎲 Gerenciar Cubos</a>
+                <a href="#" class="nav-link">🔑 Chaves 4D</a>
+                <a href="#" class="nav-link">🔒 Criptografia</a>
+                <a href="#" class="nav-link">📈 Relatórios</a>
+            </div>
+        </div>
+
+        <div class="cube-visual">
+            <div class="face front">NORTE<br>Kyber</div>
+            <div class="face back">SUL<br>ECC</div>
+            <div class="face right">LESTE<br>AES</div>
+            <div class="face left">OESTE<br>Hash</div>
+            <div class="face top">TOPO<br>Stream</div>
+            <div class="face bottom">BASE<br>MAC</div>
+        </div>
+
+        <div class="features">
+            <div class="feature-card">
+                <h3>🎯 Encontro Quântico-Clássico</h3>
+                <p>Kyber1024 (Pós-quântico) + ECC P-521 (Clássico) no espaço 4D</p>
+            </div>
+            <div class="feature-card">
+                <h3>🔐 6 Faces Multidimensionais</h3>
+                <p>Norte, Sul, Leste, Oeste, Topo, Base - cada face com verso e anverso</p>
+            </div>
+            <div class="feature-card">
+                <h3>🏦 Arquitetura Enterprise</h3>
+                <p>PostgreSQL, HSM Integration, Auditoria Completa, Compliance FIPS 140-3</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Animação simples do cubo
+        document.addEventListener('DOMContentLoaded', function() {
+            const cube = document.querySelector('.cube-visual');
+            setInterval(() => {
+                cube.style.animation = 'none';
+                setTimeout(() => {
+                    cube.style.animation = 'rotate 20s infinite linear';
+                }, 10);
+            }, 20000);
+        });
+    </script>
+</body>
+</html>

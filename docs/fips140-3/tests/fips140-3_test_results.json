@@ -1,0 +1,104 @@
+{
+  "test_suite": "FIPS 140-3 Level 1 Conformance",
+  "module": "KayosCrypto v5.0.1 ULTIMATE",
+  "timestamp": "2025-11-28T20:12:06.669244",
+  "summary": {
+    "total_tests": 13,
+    "passed": 13,
+    "failed": 0,
+    "success_rate": 100.0
+  },
+  "results": [
+    {
+      "test_name": "Module Initialization",
+      "status": true,
+      "details": "Module initialized successfully",
+      "duration": 0.00019097328186035156,
+      "timestamp": "2025-11-28T20:12:06.536236"
+    },
+    {
+      "test_name": "Symmetric Encryption",
+      "status": true,
+      "details": "Consistent: True, Encrypted: True, Reversible: True",
+      "duration": 0.0026426315307617188,
+      "timestamp": "2025-11-28T20:12:06.538903"
+    },
+    {
+      "test_name": "Key Derivation",
+      "status": true,
+      "details": "Consistent: True, Different: True, Length: 32",
+      "duration": 9.298324584960938e-05,
+      "timestamp": "2025-11-28T20:12:06.539016"
+    },
+    {
+      "test_name": "Hash Functions",
+      "status": true,
+      "details": "SHA-256: CORRECT",
+      "duration": 1.9073486328125e-06,
+      "timestamp": "2025-11-28T20:12:06.539030"
+    },
+    {
+      "test_name": "Power-Up Self-Tests",
+      "status": true,
+      "details": "Self-test result: PASSED",
+      "duration": 0.002555370330810547,
+      "timestamp": "2025-11-28T20:12:06.541594"
+    },
+    {
+      "test_name": "Conditional Self-Tests",
+      "status": true,
+      "details": ".3f",
+      "duration": 0.0026404857635498047,
+      "timestamp": "2025-11-28T20:12:06.544251"
+    },
+    {
+      "test_name": "Key Generation",
+      "status": true,
+      "details": "Keys: UNIQUE, Entropy: OK",
+      "duration": 7.152557373046875e-06,
+      "timestamp": "2025-11-28T20:12:06.544274"
+    },
+    {
+      "test_name": "Key Storage",
+      "status": true,
+      "details": "Key storage: SECURE",
+      "duration": 0.005217075347900391,
+      "timestamp": "2025-11-28T20:12:06.549501"
+    },
+    {
+      "test_name": "Avalanche Effect",
+      "status": true,
+      "details": ".1%",
+      "duration": 0.002536773681640625,
+      "timestamp": "2025-11-28T20:12:06.552056"
+    },
+    {
+      "test_name": "Reversibility",
+      "status": true,
+      "details": "Reversibility: 100%",
+      "duration": 0.007528781890869141,
+      "timestamp": "2025-11-28T20:12:06.559608"
+    },
+    {
+      "test_name": "Key Sensitivity",
+      "status": true,
+      "details": ".1%",
+      "duration": 0.004749774932861328,
+      "timestamp": "2025-11-28T20:12:06.564379"
+    },
+    {
+      "test_name": "Performance",
+      "status": true,
+      "details": ".1f",
+      "duration": 0.099334716796875,
+      "timestamp": "2025-11-28T20:12:06.663732"
+    },
+    {
+      "test_name": "Statistical Properties",
+      "status": true,
+      "details": ".2f",
+      "duration": 0.004546403884887695,
+      "timestamp": "2025-11-28T20:12:06.669099"
+    }
+  ]
+}

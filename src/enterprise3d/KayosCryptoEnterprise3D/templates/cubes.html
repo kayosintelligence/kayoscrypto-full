@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Gerenciar Cubos - KayosCrypto 3D Enterprise</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; color: #333; margin: 0; padding: 20px; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        h1 { color: #667eea; text-align: center; margin-bottom: 20px; }
+        .card { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { text-align: left; padding: 12px; border-bottom: 1px solid #ddd; }
+        th { background-color: #f8f9fa; }
+        .nav-link { display: inline-block; margin-top: 20px; padding: 10px 20px; background: #667eea; color: white; text-decoration: none; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎲 Gerenciar Cubos Sator 3D</h1>
+        <div class="card">
+            {% if cubes and cubes.cubes %}
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID do Cubo</th>
+                            <th>Nome</th>
+                            <th>Nível de Segurança</th>
+                            <th>Rotações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for cube in cubes.cubes %}
+                        <tr>
+                            <td>{{ cube.cube_id[:8] }}...</td>
+                            <td>{{ cube.cube_name }}</td>
+                            <td>{{ cube.security_level }}</td>
+                            <td>{{ cube.rotation_count }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p>Nenhum cubo encontrado.</p>
+            {% endif %}
+        </div>
+        <a href="/" class="nav-link">Voltar para Home</a>
+    </div>
+</body>
+</html>

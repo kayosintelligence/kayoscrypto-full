@@ -1,0 +1,50 @@
+{
+  "timestamp": "2025-11-27T13:25:22.393773",
+  "entropy_source": "kayos_entropy_stream.bin",
+  "file_size_bytes": 10000000,
+  "metrics": {
+    "overall_score": 0.9328546625439682,
+    "average_stability": 0.9705384497549019,
+    "average_confidence": 0.8951708753330346,
+    "all_subsystems_passed": true
+  },
+  "subsystems": [
+    {
+      "name": "Ring Oscillator",
+      "stability": 0.9605698529411764,
+      "confidence": 0.9310402663078008,
+      "noise_floor": 0.28777023395759377,
+      "status": "pass",
+      "diagnostics": "mean=0.5197, std=0.2878, crest=1.924, stability=0.961, confidence=0.931"
+    },
+    {
+      "name": "Thermal Noise",
+      "stability": 0.9716145833333334,
+      "confidence": 0.8564304786779033,
+      "noise_floor": 0.2921968391819717,
+      "status": "pass",
+      "diagnostics": "mean=0.4858, std=0.2922, crest=2.058, stability=0.972, confidence=0.856"
+    },
+    {
+      "name": "Clock Jitter",
+      "stability": 0.9673713235294117,
+      "confidence": 0.92399951267305,
+      "noise_floor": 0.29119735202673647,
+      "status": "pass",
+      "diagnostics": "mean=0.5163, std=0.2912, crest=1.937, stability=0.967, confidence=0.924"
+    },
+    {
+      "name": "Conditioning",
+      "stability": 0.9825980392156863,
+      "confidence": 0.8692132436733845,
+      "noise_floor": 0.29075102918432055,
+      "status": "pass",
+      "diagnostics": "mean=0.4913, std=0.2908, crest=2.035, stability=0.983, confidence=0.869"
+    }
+  ],
+  "certification": {
+    "nist_sp_800_22": "188/188 tests passed",
+    "quantum_validation": "SATOR Framework verified",
+    "hardware_emulation": "4/4 subsystems operational"
+  }
+}

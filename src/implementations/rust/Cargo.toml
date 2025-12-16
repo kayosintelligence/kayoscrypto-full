@@ -1,0 +1,24 @@
+[package]
+name = "kayoscrypto"
+version = "5.0.1"
+edition = "2021"
+authors = ["KAYOS Quantum Research Lab"]
+description = "Geometric cryptographic system based on Fibonacci sequences and golden ratio rotations"
+license = "Proprietary"
+repository = "https://github.com/kayos/kayoscrypto"
+keywords = ["cryptography", "fibonacci", "golden-ratio", "encryption"]
+categories = ["cryptography"]
+
+[dependencies]
+sha2 = "0.10"
+
+[dev-dependencies]
+criterion = "0.5"
+
+[[bench]]
+name = "benchmarks"
+harness = false
+
+[lib]
+name = "kayoscrypto"
+path = "src/lib.rs"

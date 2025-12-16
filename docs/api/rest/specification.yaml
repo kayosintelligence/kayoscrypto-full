@@ -1,0 +1,23 @@
+openapi: 3.1.0
+info:
+  title: KayosCrypto Enterprise API
+  version: 0.1.0
+  description: >-
+    REST specification placeholder for KayosCrypto entropy services.
+servers:
+  - url: https://api.kayoscrypto.dev
+paths:
+  /v1/entropy/health:
+    get:
+      summary: Health probe for the KayosCrypto service
+      responses:
+        '200':
+          description: Service operational
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: ok
