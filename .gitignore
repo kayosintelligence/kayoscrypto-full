@@ -165,3 +165,6 @@ tmp/
 # Exemplos seguros
 !examples/
 !examples/**
+
+# Rust build artifacts
+target/
